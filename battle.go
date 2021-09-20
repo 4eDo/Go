@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"time"
 	"math/rand"
+	"strconv"
 )
 
 type Army struct {
@@ -163,19 +164,19 @@ func setArmy () *Army{
 				i = 1
 			case 1:
 				fmt.Println("\tВоинов на левом фланге:")
-				fmt.Scanf("%d\n",&l)
+				l = checkInput()
 				i = 2
 			case 2:
 				fmt.Println("\tВоинов на правом фланге:")
-				fmt.Scanf("%d\n",&r)
+				r = checkInput()
 				i = 3
 			case 3:
 				fmt.Println("\tВоинов по центру:")
-				fmt.Scanf("%d\n",&c)
+				c = checkInput()
 				i = 4
 			case 4:
 				fmt.Println("\tВоинов вокруг знаменосца:")
-				fmt.Scanf("%d\n",&p)
+				p = checkInput()
 				i = 5
 		}
 	}
@@ -188,6 +189,26 @@ func setArmy () *Army{
 		Pennant:	p,
 	}
 	return ar
+}
+
+// Проверка ввода
+func checkInput() int {
+	var temp	string
+	for {
+		fmt.Scanf("%s\n",&temp)
+		rez, err := strconv.Atoi(temp)
+		if err == nil {
+			if rez<0 {
+				fmt.Println("! Воинов не может быть меньше нуля! Это не фэнтези, некроманты не допускаются к участию! Одумайтесь и введите положительное число.")
+			} else if rez == 0 {
+				fmt.Println("! Воины обязаны присутствовать на поле боя! Введите отличное от нуля положительное число.")
+			} else {
+				return rez
+			}
+		} else {
+			fmt.Println("! Количество воинов должно быть введено как положительное целое число.")
+		}
+	}
 }
 
 // Подсчёт количества воинов в войске
